@@ -37,12 +37,12 @@ def echo(message: str) -> str:
     """Echo the provided message."""
     return message
 
-mcp_comp = FastMCP("Comp server with Google OAuth", auth=auth_2)
+# mcp_comp = FastMCP("Comp server with Google OAuth", auth=auth_2)
 
-@mcp_comp.tool
-def echo_comp() -> str:
-    """Echo the provided message."""
-    return f"Hello,!"
+# @mcp_comp.tool
+# def echo_comp() -> str:
+#     """Echo the provided message."""
+#     return f"Hello,!"
 
 
 # Create an authenticated client for the remote server
@@ -52,7 +52,7 @@ authenticated_client = Client("http://localhost:8001/mcp/", auth="oauth")
 # Create proxy using the authenticated client
 remote_proxy = FastMCP.as_proxy(authenticated_client)
 
-mcp.mount("http://localhost:8001/mcp/", prefix="mcp_comp")
+mcp.mount(remote_proxy, prefix="mcp_comp")
 
 # Testing access to mounted tools
 async def test_dynamic_mount():
